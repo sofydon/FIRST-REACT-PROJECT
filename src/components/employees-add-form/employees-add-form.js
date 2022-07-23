@@ -5,26 +5,29 @@ class EmployeesAddForm extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            name: '',
-            salary: ''
-        }
-    }
-    onValueChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    onSubmit = (e) => {
-        e.preventDeafult();
-        this.props.onAdd(this.state.name, this.state.salary);
-        this.setState({
             name:'',
             salary:''
+        }
+    }
+    
+    onValueChange = (e) => {
+        this.setState({
+            [e.target.name] : e.target.value
         })
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        if (!this.state.name || this.state.name < 2 || !this.state.salary) return; //валидация формы
+            this.props.onAdd(this.state.name, this.state.salary);
+            this.setState({
+                name:'',
+                salary:''
+            })
     }
     
     render () {
-        const {name,salary} = this.state;
+        const {name, salary} = this.state;
 
         return (
             <div className="app-add-form">
